@@ -56,21 +56,24 @@ public class MainActivity extends AppCompatActivity {
         switch (clickedItem) {
             case R.id.now_playing:
                 Log.v("onOptionsItemSelected", "Now Playing Clicked");
-                setTitle("Now Playing");
                 generateNowPlayingCall();
+                break;
 
             case R.id.top_rated:
                 Log.v("onOptionsItemSelected", "Top Rated Clicked");
-                setTitle("Top Rated");
                 generateTopRatedCall();
+                break;
 
             case R.id.up_coming:
                 Log.v("onOptionsItemSelected", "Up Coming Clicked");
-                setTitle("Up Coming");
                 generateUpComingCall();
+                break;
+
             case R.id.fav:
                 setTitle("Favourite");
                 Log.v("onOptionsItemSelected", "Favourite Clicked");
+
+                break;
 
         }
         return super.onOptionsItemSelected(item);
@@ -85,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void generateNowPlayingCall() {
+        setTitle("Now Playing");
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Call<Movie> call = service.getNowPlayingMovies();
         call.enqueue(new Callback<Movie>() {
@@ -104,6 +108,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void generateTopRatedCall() {
+        setTitle("Top Rated");
+
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Call<Movie> call = service.getTopRatedMovies();
         call.enqueue(new Callback<Movie>() {
@@ -124,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void generateUpComingCall() {
+        setTitle("Up Coming");
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Call<Movie> call = service.getUpComingMovies();
         call.enqueue(new Callback<Movie>() {

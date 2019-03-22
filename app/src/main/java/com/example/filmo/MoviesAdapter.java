@@ -1,6 +1,7 @@
 package com.example.filmo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,6 +57,27 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
                         .intoTextColor(holder.movieCategoryMain_tv, GlidePalette.Swatch.BODY_TEXT_COLOR)
                         .crossfade(true)
                 ).into(holder.moviePosterMain_iv);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent myIntent = new Intent(context, DetailedActivity.class);
+                myIntent.putExtra("TITLE_KEY", moviesList.get(position).getTitle());
+                myIntent.putExtra("LANGUAGE_KEY", moviesList.get(position).getOriginalLanguage());
+                myIntent.putExtra("OVERVIEW_KEY", moviesList.get(position).getOverview());
+                myIntent.putExtra("RELEASE_KEY", moviesList.get(position).getReleaseDate());
+                myIntent.putExtra("POSTER_KEY", moviesList.get(position).getPosterPath());
+                myIntent.putExtra("AVG_RATE_KEY", moviesList.get(position).getVoteAverage());
+                myIntent.putExtra("VOTE_COUNT_KEY", moviesList.get(position).getVoteCount());
+//                myIntent.putExtra("GENRE_KEY", (Parcelable) moviesList.get(position).getGenreIds());
+                myIntent.putExtra("IS_ADULT", moviesList.get(position).getAdult());
+                myIntent.putExtra("IS_VIDEO", moviesList.get(position).getVideo());
+                myIntent.putExtra("MOVIE_ID", moviesList.get(position).getId());
+
+                context.startActivity(myIntent);
+            }
+        });
     }
 
     @Override
@@ -66,6 +88,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.movie_title_main)
         TextView movieTitleMain_tv;
+        Intent intent = new Intent(itemView.getContext(), DetailedActivity.class);
+
 
         @BindView(R.id.movie_category_main)
         TextView movieCategoryMain_tv;
@@ -81,7 +105,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(v -> {
-
             });
         }
 
