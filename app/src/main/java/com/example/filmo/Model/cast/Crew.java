@@ -1,4 +1,3 @@
-
 package com.example.filmo.Model.cast;
 
 import android.os.Parcel;

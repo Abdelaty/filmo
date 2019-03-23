@@ -1,4 +1,3 @@
-
 package com.example.filmo.Model.movies;
 
 import android.os.Parcel;
@@ -10,6 +9,21 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Result implements Parcelable {
+    public final static Parcelable.Creator<Result> CREATOR = new Creator<Result>() {
+
+
+        @SuppressWarnings({
+                "unchecked"
+        })
+        public Result createFromParcel(Parcel in) {
+            return new Result(in);
+        }
+
+        public Result[] newArray(int size) {
+            return (new Result[size]);
+        }
+
+    };
     @SerializedName("vote_count")
     @Expose
     private Integer voteCount;
@@ -52,21 +66,6 @@ public class Result implements Parcelable {
     @SerializedName("release_date")
     @Expose
     private String releaseDate;
-    public final static Parcelable.Creator<Result> CREATOR = new Creator<Result>() {
-
-
-        @SuppressWarnings({
-                "unchecked"
-        })
-        public Result createFromParcel(Parcel in) {
-            return new Result(in);
-        }
-
-        public Result[] newArray(int size) {
-            return (new Result[size]);
-        }
-
-    };
 
     public Result(Parcel in) {
         this.voteCount = ((Integer) in.readValue((Integer.class.getClassLoader())));

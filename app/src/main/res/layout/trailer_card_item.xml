@@ -6,8 +6,12 @@
     android:padding="5dp">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:elevation="4dp"
+        android:layout_marginLeft="5dp"
+        android:id="@+id/trailer_rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 </androidx.cardview.widget.CardView>

@@ -1,4 +1,3 @@
-
 package com.example.filmo.Model.movies;
 
 import android.os.Parcel;
@@ -9,9 +8,23 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Movie implements Parcelable
-{
+public class Movie implements Parcelable {
 
+    public final static Parcelable.Creator<Movie> CREATOR = new Creator<Movie>() {
+
+
+        @SuppressWarnings({
+                "unchecked"
+        })
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        public Movie[] newArray(int size) {
+            return (new Movie[size]);
+        }
+
+    };
     @SerializedName("results")
     @Expose
     private List<Result> results = null;
@@ -27,22 +40,6 @@ public class Movie implements Parcelable
     @SerializedName("total_pages")
     @Expose
     private Integer totalPages;
-    public final static Parcelable.Creator<Movie> CREATOR = new Creator<Movie>() {
-
-
-        @SuppressWarnings({
-            "unchecked"
-        })
-        public Movie createFromParcel(Parcel in) {
-            return new Movie(in);
-        }
-
-        public Movie[] newArray(int size) {
-            return (new Movie[size]);
-        }
-
-    }
-    ;
 
     protected Movie(Parcel in) {
         in.readList(this.results, (Result.class.getClassLoader()));
@@ -104,7 +101,7 @@ public class Movie implements Parcelable
     }
 
     public int describeContents() {
-        return  0;
+        return 0;
     }
 
 }

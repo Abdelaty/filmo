@@ -15,15 +15,66 @@
         <include
             android:id="@+id/movie_card_item"
             layout="@layout/movie_card_item"
-            android:layout_marginBottom="5dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp" />
+
+        <TextView
+            android:id="@+id/overview_lbl"
+            android:textSize="22sp"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/movie_card_item"
+            android:padding="4dp"
+            android:text="Overview:"
+            android:textStyle="bold" />
 
         <include
+
+            android:id="@+id/movie_overview_lay"
             layout="@layout/movie_overview_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/movie_card_item" />
+            android:layout_below="@+id/overview_lbl" />
+
+        <TextView
+            android:textSize="22sp"
+
+            android:id="@+id/review_lbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/movie_overview_lay"
+            android:padding="4dp"
+            android:text="Reviews:"
+            android:textStyle="bold"
+            android:visibility="visible" />
+
+        <include
+            android:id="@+id/review_lay"
+            layout="@layout/review_card_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/review_lbl" />
+
+        <TextView
+            android:textSize="22sp"
+
+            android:id="@+id/trailer_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/review_lay"
+            android:padding="4dp"
+            android:text="Trailers:"
+            android:textStyle="bold"
+            android:visibility="visible" />
+
+        <include
+            android:id="@+id/movie_trailer"
+            layout="@layout/trailer_card_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/trailer_label" />
 
 
     </RelativeLayout>

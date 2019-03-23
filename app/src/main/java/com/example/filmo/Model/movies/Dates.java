@@ -1,4 +1,3 @@
-
 package com.example.filmo.Model.movies;
 
 import android.os.Parcel;
@@ -7,20 +6,13 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Dates implements Parcelable
-{
+public class Dates implements Parcelable {
 
-    @SerializedName("maximum")
-    @Expose
-    private String maximum;
-    @SerializedName("minimum")
-    @Expose
-    private String minimum;
     public final static Parcelable.Creator<Dates> CREATOR = new Creator<Dates>() {
 
 
         @SuppressWarnings({
-            "unchecked"
+                "unchecked"
         })
         public Dates createFromParcel(Parcel in) {
             return new Dates(in);
@@ -30,8 +22,13 @@ public class Dates implements Parcelable
             return (new Dates[size]);
         }
 
-    }
-    ;
+    };
+    @SerializedName("maximum")
+    @Expose
+    private String maximum;
+    @SerializedName("minimum")
+    @Expose
+    private String minimum;
 
     protected Dates(Parcel in) {
         this.maximum = ((String) in.readValue((String.class.getClassLoader())));
@@ -63,7 +60,7 @@ public class Dates implements Parcelable
     }
 
     public int describeContents() {
-        return  0;
+        return 0;
     }
 
 }

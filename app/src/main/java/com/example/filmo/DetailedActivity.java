@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.example.filmo.Adapters.ReviewAdapter;
+import com.example.filmo.Adapters.TrailerAdapter;
 import com.example.filmo.Model.backdrops.BackdropResult;
 import com.example.filmo.Model.backdrops.Backdrops;
 import com.example.filmo.Model.cast.Cast;
@@ -20,14 +22,14 @@ import com.example.filmo.Model.trailer.ResultTrailer;
 import com.example.filmo.Model.trailer.Trailers;
 import com.example.filmo.Network.GetDataService;
 import com.example.filmo.Network.RetrofitClientInstance;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -40,7 +42,6 @@ public class DetailedActivity extends AppCompatActivity {
     boolean isVideo, isAdult;
     int voteCount, movieId;
     double rate;
-    private List<ResultTrailer> trailersMoviesList;
     String apiKey = "ceb888b71023afda704f84975d2642b5";
     @BindView(R.id.detailed_poster)
     ImageView detailed_iv;
@@ -58,9 +59,20 @@ public class DetailedActivity extends AppCompatActivity {
     TextView movieReleaseDate;
     @BindView(R.id.movie_poster_detail)
     ImageView detailedRightPoster;
+    @BindView(R.id.reviews_rv)
+    RecyclerView reviews_rv;
+    @BindView(R.id.review_lbl)
+    TextView reviewLabel;
+    @BindView(R.id.trailer_label)
+    TextView trailerLabel;
+    @BindView(R.id.trailer_rv)
+    RecyclerView trailer_rv;
     Intent intent;
+    private List<ResultTrailer> trailersMoviesList;
     private List<ResultReview> reviewMoviesList;
     private List<BackdropResult> backdropsList;
+    private ReviewAdapter reviewsAdapter;
+    private TrailerAdapter trailerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +80,8 @@ public class DetailedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detailed);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         intent = getIntent();
         setTitle("");
         getIntentData(intent);
@@ -77,16 +91,13 @@ public class DetailedActivity extends AppCompatActivity {
         generateTrailersCall();
         setLayoutData();
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
 
     }
 
     private void setLayoutData() {
         movieOverview.setText(intent.getStringExtra("OVERVIEW_KEY"));
         movieTitle.setText(intent.getStringExtra("TITLE_KEY"));
-        movieRate.setText("8.0");
+        movieRate.setText(Double.toString(intent.getDoubleExtra("AVG_RATE_KEY", 0.0)));
         movieReleaseDate.setText("Release Date: " + intent.getStringExtra("RELEASE_KEY"));
         if (intent.getBooleanExtra("IS_ADULT", false)) {
             adultIcon.setVisibility(View.VISIBLE);
@@ -117,7 +128,7 @@ public class DetailedActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<Reviews> call, @NonNull Response<Reviews> response) {
                 reviewMoviesList = response.body().getResults();
-//                Log.v("Reviews Call", "Success" + reviewMoviesList.get(1).getUrl());
+                generateReviewsList(reviewMoviesList);
             }
 
             @Override
@@ -136,9 +147,6 @@ public class DetailedActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<Cast> call, @NonNull Response<Cast> response) {
                 castMoviesList = response.body().getCast();
-                Log.v("Cast Call", "Success" + castMoviesList.get(0).getCharacter());
-                Log.v("Cast Call", "Success");
-
             }
 
             @Override
@@ -156,8 +164,7 @@ public class DetailedActivity extends AppCompatActivity {
         call.enqueue(new Callback<Trailers>() {
             @Override
             public void onResponse(@NonNull Call<Trailers> call, @NonNull Response<Trailers> response) {
-                trailersMoviesList = response.body().getResults();
-                Log.v("Trailers Call", trailersMoviesList.get(0).getId());
+                generateTrailerList(response.body().getResults());
             }
 
             @Override
@@ -193,4 +200,32 @@ public class DetailedActivity extends AppCompatActivity {
         Glide.with(getApplicationContext()).load("http://image.tmdb.org/t/p/w500" + filePath)
                 .apply(new RequestOptions().override(Target.SIZE_ORIGINAL).dontTransform()).into(detailed_iv);
     }
+
+
+    private void generateReviewsList(List<ResultReview> resultReviews) {
+        if (resultReviews.size() < 1) {
+            Log.v("Generate Review", "null");
+            reviewLabel.setVisibility(View.INVISIBLE);
+        } else {
+            reviewLabel.setVisibility(View.VISIBLE);
+            reviewsAdapter = new ReviewAdapter(this, resultReviews);
+            final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
+            reviews_rv.setLayoutManager(linearLayoutManager);
+            reviews_rv.setAdapter(reviewsAdapter);
+        }
+    }
+
+    private void generateTrailerList(List<ResultTrailer> resultTrailers) {
+        if (resultTrailers.size() < 1) {
+            Log.v("Generate Trailers", "null");
+            trailerLabel.setVisibility(View.INVISIBLE);
+        } else {
+            trailerLabel.setVisibility(View.VISIBLE);
+            trailerAdapter = new TrailerAdapter(this, resultTrailers);
+            final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+            trailer_rv.setLayoutManager(linearLayoutManager);
+            trailer_rv.setAdapter(trailerAdapter);
+        }
+    }
+
 }

@@ -2,6 +2,7 @@ package com.example.filmo.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.filmo.Database.DatabaseClient;
+import com.example.filmo.Database.MoviesDbModel;
 import com.example.filmo.DetailedActivity;
 import com.example.filmo.Model.movies.Result;
 import com.example.filmo.R;
@@ -24,15 +28,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> {
+    int x = 0;
     private Context context;
     private List<Result> moviesList;
     private LayoutInflater layoutInflater;
+    private List<Result> favList;
 
     public MoviesAdapter(Context context, List<Result> List) {
         this.context = context;
         moviesList = List;
         Log.v("hello", moviesList.get(0).getOverview());
-
         layoutInflater = LayoutInflater.from(context);
     }
 
@@ -40,25 +45,50 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = layoutInflater.inflate(R.layout.movie_item_rv, parent, false);
+
         return new ViewHolder(view);
     }
 
+    //0
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String movieTitle = moviesList.get(position).getTitle();
         holder.movieTitleMain_tv.setText(movieTitle);
         holder.movieCategoryMain_tv.setText("Generals");
         String imageUrl = moviesList.get(position).getPosterPath();
-        Glide.with(context).load("http://image.tmdb.org/t/p/w185" + imageUrl)
+        Glide.with(context).load("http://image.tmdb.org/t/p/w500" + imageUrl)
                 .listener(GlidePalette.with("http://image.tmdb.org/t/p/w500" + imageUrl)
-                        .use(GlidePalette.Profile.MUTED_DARK)
+                        .use(GlidePalette.Profile.VIBRANT)
                         .intoBackground(holder.relativeLayout)
                         .intoTextColor(holder.movieTitleMain_tv)
-                        .use(GlidePalette.Profile.VIBRANT)
-                        .intoBackground(holder.relativeLayout, GlidePalette.Swatch.RGB)
-                        .intoTextColor(holder.movieCategoryMain_tv, GlidePalette.Swatch.BODY_TEXT_COLOR)
                         .crossfade(true)
                 ).into(holder.moviePosterMain_iv);
+        holder.fav_imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "Added to Favorite List" + moviesList.get(position).getOriginalTitle(), Toast.LENGTH_LONG).show();
+                holder.fav_imageView.setImageResource(R.drawable.fav_icon);
+                class AgentAsyncTask extends AsyncTask<Void, Void, Integer> {
+                    @Override
+                    protected Integer doInBackground(Void... voids) {
+                        if (!DatabaseClient.getInstance(context).getAppDatabase().moviesDao().getMovieWithId(moviesList.get(position).getId())) {
+                            x = 1;
+                            MoviesDbModel task = new MoviesDbModel();
+                            task.setMovieId(moviesList.get(position).getId());
+                            DatabaseClient.getInstance(context).getAppDatabase().moviesDao().insertAll(task);
+                        } else {
+                            x = 2;
+                            MoviesDbModel task = new MoviesDbModel();
+                            task.getMovieId();
+                            DatabaseClient.getInstance(context).getAppDatabase().moviesDao().delete(task);
+                        }
+                        return null;
+                    }
+                }
+                AgentAsyncTask agentAsyncTask = new AgentAsyncTask();
+                agentAsyncTask.execute();
+            }
+        });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +102,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
                 myIntent.putExtra("POSTER_KEY", moviesList.get(position).getPosterPath());
                 myIntent.putExtra("AVG_RATE_KEY", moviesList.get(position).getVoteAverage());
                 myIntent.putExtra("VOTE_COUNT_KEY", moviesList.get(position).getVoteCount());
-//                myIntent.putExtra("GENRE_KEY", (Parcelable) moviesList.get(position).getGenreIds());
                 myIntent.putExtra("IS_ADULT", moviesList.get(position).getAdult());
                 myIntent.putExtra("IS_VIDEO", moviesList.get(position).getVideo());
                 myIntent.putExtra("MOVIE_ID", moviesList.get(position).getId());
@@ -81,6 +110,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
             }
         });
     }
+
 
     @Override
     public int getItemCount() {
@@ -92,6 +122,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         TextView movieTitleMain_tv;
         Intent intent = new Intent(itemView.getContext(), DetailedActivity.class);
 
+        @BindView(R.id.fav_button_main)
+        ImageView fav_imageView;
 
         @BindView(R.id.movie_category_main)
         TextView movieCategoryMain_tv;

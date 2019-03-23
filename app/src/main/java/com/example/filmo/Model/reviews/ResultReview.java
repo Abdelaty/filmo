@@ -1,4 +1,3 @@
-
 package com.example.filmo.Model.reviews;
 
 import android.os.Parcel;

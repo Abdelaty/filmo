@@ -1,4 +1,3 @@
-
 package com.example.filmo.Model.trailer;
 
 import android.os.Parcel;

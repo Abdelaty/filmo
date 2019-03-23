@@ -1,4 +1,3 @@
-
 package com.example.filmo.Model.backdrops;
 
 import com.google.gson.annotations.Expose;
