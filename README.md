@@ -1,4 +1,3 @@
-
 **Filmo**
 
 This is a fully functional and colorful android app which I made from scratch
