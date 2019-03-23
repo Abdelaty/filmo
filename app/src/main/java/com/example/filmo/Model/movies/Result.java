@@ -1,5 +1,5 @@
 
-package com.example.filmo.Model;
+package com.example.filmo.Model.movies;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -68,7 +68,7 @@ public class Result implements Parcelable {
 
     };
 
-    protected Result(Parcel in) {
+    public Result(Parcel in) {
         this.voteCount = ((Integer) in.readValue((Integer.class.getClassLoader())));
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));
         this.video = ((Boolean) in.readValue((Boolean.class.getClassLoader())));

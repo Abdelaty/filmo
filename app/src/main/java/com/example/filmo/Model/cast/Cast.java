@@ -1,5 +1,5 @@
 
-package com.example.filmo.Model;
+package com.example.filmo.Model.cast;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -39,7 +39,7 @@ public class Cast implements Parcelable {
     protected Cast(Parcel in) {
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));
         in.readList(this.cast, (CastResult.class.getClassLoader()));
-        in.readList(this.crew, (com.example.filmo.Model.Crew.class.getClassLoader()));
+        in.readList(this.crew, (Crew.class.getClassLoader()));
     }
 
     public Cast() {

@@ -1,5 +1,5 @@
 
-package com.example.filmo.Model;
+package com.example.filmo.Model.cast;
 
 import android.os.Parcel;
 import android.os.Parcelable;

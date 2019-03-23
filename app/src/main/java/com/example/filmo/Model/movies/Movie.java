@@ -1,12 +1,13 @@
 
-package com.example.filmo.Model;
+package com.example.filmo.Model.movies;
 
-import java.util.List;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class Movie implements Parcelable
 {

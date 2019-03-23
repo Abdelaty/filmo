@@ -55,6 +55,7 @@ dependencies {
 
     //Toasty Library
     implementation 'com.github.GrenderG:Toasty:1.4.1'
+    implementation 'com.orhanobut:logger:2.2.0'
 
     //ButterKnife Library
     implementation 'com.jakewharton:butterknife:10.1.0'

@@ -2,7 +2,7 @@
 //
 //import android.util.Log;
 //
-//import com.example.filmo.Model.Result;
+//import com.example.filmo.Model.movies.Result;
 //
 //import java.util.List;
 //

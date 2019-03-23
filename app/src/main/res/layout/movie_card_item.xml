@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/movie_card_item"
+    style="@style/MovieItem"
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/movie_poster_detail"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/lace" />
+
+        <TextView
+            android:id="@+id/movie_title_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="30dp"
+            android:layout_toEndOf="@id/movie_poster_detail"
+            android:layout_toRightOf="@id/movie_poster_detail"
+            android:maxLines="3"
+
+            android:padding="5dp"
+            android:text="The Avengers"
+            android:textColor="@color/colorPrimary"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/detail_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/movie_title_detail"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_toEndOf="@id/movie_poster_detail"
+            android:layout_toRightOf="@id/movie_poster_detail"
+            android:padding="5dp"
+            android:text="7.8"
+            android:textSize="50sp" />
+
+        <ImageView
+            android:id="@+id/adult_icon"
+            android:layout_width="40sp"
+            android:layout_height="40dp"
+            android:layout_below="@id/detail_rate"
+            android:layout_toEndOf="@id/movie_poster_detail"
+            android:layout_toRightOf="@id/movie_poster_detail"
+            android:padding="5dp"
+            android:src="@drawable/adult_icon" />
+
+        <TextView
+            android:id="@+id/release_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@id/movie_poster_detail"
+            android:layout_toRightOf="@id/movie_poster_detail"
+            android:padding="5dp"
+            android:text="Release Date: 2018-1-17"
+            android:textSize="15sp" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

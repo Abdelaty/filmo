@@ -1,9 +1,10 @@
 
-package com.example.filmo.Model;
+package com.example.filmo.Model.reviews;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.filmo.Model.movies.Result;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

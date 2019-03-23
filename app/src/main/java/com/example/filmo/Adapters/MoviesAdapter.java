@@ -1,4 +1,4 @@
-package com.example.filmo;
+package com.example.filmo.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.filmo.Model.Result;
+import com.example.filmo.DetailedActivity;
+import com.example.filmo.Model.movies.Result;
+import com.example.filmo.R;
 import com.github.florent37.glidepalette.GlidePalette;
 
 import java.util.List;
@@ -26,7 +28,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     private List<Result> moviesList;
     private LayoutInflater layoutInflater;
 
-    MoviesAdapter(Context context, List<Result> List) {
+    public MoviesAdapter(Context context, List<Result> List) {
         this.context = context;
         moviesList = List;
         Log.v("hello", moviesList.get(0).getOverview());
@@ -48,7 +50,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         holder.movieCategoryMain_tv.setText("Generals");
         String imageUrl = moviesList.get(position).getPosterPath();
         Glide.with(context).load("http://image.tmdb.org/t/p/w185" + imageUrl)
-                .listener(GlidePalette.with("http://image.tmdb.org/t/p/w185" + imageUrl)
+                .listener(GlidePalette.with("http://image.tmdb.org/t/p/w500" + imageUrl)
                         .use(GlidePalette.Profile.MUTED_DARK)
                         .intoBackground(holder.relativeLayout)
                         .intoTextColor(holder.movieTitleMain_tv)

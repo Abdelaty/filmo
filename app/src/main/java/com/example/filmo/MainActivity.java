@@ -5,8 +5,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.filmo.Model.Movie;
-import com.example.filmo.Model.Result;
+import com.example.filmo.Adapters.MoviesAdapter;
+import com.example.filmo.Model.movies.Movie;
+import com.example.filmo.Model.movies.Result;
 import com.example.filmo.Network.GetDataService;
 import com.example.filmo.Network.RetrofitClientInstance;
 

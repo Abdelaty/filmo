@@ -1,9 +1,10 @@
 
-package com.example.filmo.Model;
+package com.example.filmo.Model.reviews;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.filmo.Model.movies.Result;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -45,7 +46,7 @@ public class Reviews implements Parcelable {
     protected Reviews(Parcel in) {
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));
         this.page = ((Integer) in.readValue((Integer.class.getClassLoader())));
-        in.readList(this.results, (com.example.filmo.Model.Result.class.getClassLoader()));
+        in.readList(this.results, (Result.class.getClassLoader()));
         this.totalPages = ((Integer) in.readValue((Integer.class.getClassLoader())));
         this.totalResults = ((Integer) in.readValue((Integer.class.getClassLoader())));
     }
